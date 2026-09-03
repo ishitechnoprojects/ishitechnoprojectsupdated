@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>School Electronics Projects | Ishitechno Projects</title>
+<meta name="description" content="Fun, hands-on electronics projects for school students — Arduino, sensors, robotics and science-exhibition models. Learn by building with Ishitechno Projects.">
+<meta name="keywords" content="school electronics projects, Arduino for students, science exhibition project, obstacle avoiding robot, smart dustbin project">
+<link rel="canonical" href="https://ishitechnoprojects.in/schools/">
+<meta property="og:title" content="School Electronics Projects | Ishitechno Projects">
+<meta property="og:description" content="Learn by Building — Arduino, sensors and robotics projects designed for school students.">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/site.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-wrap">
+    <a href="../index.html" class="brand-mark"><span class="dot"></span> ISHITECHNO<br><small>LEARN&nbsp;•&nbsp;BUILD&nbsp;•&nbsp;INNOVATE</small></a>
+    <nav class="site-nav" id="siteNav">
+      <a href="../index.html">Home</a>
+      <a href="index.html" class="active">Schools</a>
+      <a href="../colleges/index.html">Colleges</a>
+      <a href="../business/index.html">Business</a>
+      <a href="../iot/index.html">IoT</a>
+      <a href="../robotics/index.html">Robotics</a>
+      <a href="../trackers/index.html">Trackers</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="../contact.html" class="btn btn-outline btn-sm">Contact Us</a>
+      <a href="#" class="btn btn-green btn-sm" data-wa="Hello Ishitechnoprojects, I am interested in a School Electronics Project.">Get Your Project</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<section class="page-hero hero-green">
+  <div class="circuit-bg"></div>
+  <h1>Electronic Projects for School Students</h1>
+  <p><strong>Learn by Building.</strong> Simple, safe and exciting Arduino &amp; sensor projects for exhibitions, science fairs and classroom learning.</p>
+</section>
+
+<section class="section">
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-btn active" data-filter="all">All Projects</button>
+    <button class="filter-btn" data-filter="Beginner">Beginner</button>
+    <button class="filter-btn" data-filter="Intermediate">Intermediate</button>
+    <button class="filter-btn" data-filter="Robotics">Robotics</button>
+    <button class="filter-btn" data-filter="Sensors">Sensors</button>
+  </div>
+  <div class="grid grid-3" id="projectGrid"></div>
+</section>
+
+<section class="cta-band">
+  <h2>Ready for the science exhibition?</h2>
+  <p>Tell us your school, grade and topic — we'll help you pick the right project and guide you through it.</p>
+  <a href="#" class="btn btn-orange" data-wa="Hello Ishitechnoprojects, I am interested in a School Electronics Project.">Request a Project on WhatsApp</a>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>ISHITECHNO PROJECTS</h4>
+      <p>Learn • Build • Innovate<br>Electronics, Embedded Systems, IoT, Robotics &amp; Automation — for schools, colleges and businesses.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <a href="../schools/index.html">School Projects</a>
+      <a href="../colleges/index.html">College Projects</a>
+      <a href="../business/index.html">Business Solutions</a>
+      <a href="../trackers/index.html">IshiTrackers</a>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <a href="../about.html">About Us</a>
+      <a href="../contact.html">Contact</a>
+      <a href="../iot/index.html">IoT Projects</a>
+      <a href="../robotics/index.html">Robotics</a>
+    </div>
+    <div>
+      <h4>Get in Touch</h4>
+      <a href="tel:+918096661501">📞 8096661501</a>
+      <a href="mailto:ishitechnoprojects@gmail.com">✉️ ishitechnoprojects@gmail.com</a>
+      <a href="#" data-wa="Hello Ishitechnoprojects, I am interested in a School Electronics Project.">💬 WhatsApp Us</a>
+    </div>
+  </div>
+  <div class="footer-bottom">&copy; <span class="year"></span> Ishitechno Projects · ishitechnoprojects.in · All rights reserved.</div>
+</footer>
+
+<a href="#" class="wa-float" data-wa="Hello Ishitechnoprojects, I am interested in a School Electronics Project.">💬</a>
+
+<script src="../js/site.js"></script>
+<script src="data.js"></script>
+<script>
+const grid = document.getElementById("projectGrid");
+function tagsFor(p) {
+  const t = [p.level];
+  if (["Obstacle Avoiding Robot","Line Following Robot","Mini Robotic Car"].includes(p.name)) t.push("Robotics");
+  if (["Automatic Street Light","Water Level Indicator","Fire Alarm","Rain Alarm","Temperature & Humidity Monitor","Solar Tracking System"].includes(p.name)) t.push("Sensors");
+  return t;
+}
+function render(filter) {
+  grid.innerHTML = "";
+  schoolProjects
+    .filter(p => filter === "all" || tagsFor(p).includes(filter))
+    .forEach(p => {
+      const badgeClass = p.level === "Beginner" ? "badge-easy" : p.level === "Intermediate" ? "badge-medium" : "badge-hard";
+      grid.insertAdjacentHTML("beforeend", `
+        <div class="card project-card">
+          <div class="thumb">
+            <img src="../images/projects/schools/${p.slug}.jpg" alt="${p.name} Arduino school project photo" loading="lazy" width="800" height="600">
+            ${p.isPlaceholder ? '<span class="placeholder-flag">Photo coming soon</span>' : ''}
+          </div>
+          <div class="body">
+            <div class="meta"><span class="badge ${badgeClass}">⭐ ${p.level}</span></div>
+            <h4>${p.name}</h4>
+            <p>${p.desc}</p>
+            <div class="components"><strong>Components:</strong> ${p.components}<br><strong>You'll learn:</strong> ${p.learn}</div>
+            <div class="card-actions">
+              <a href="${p.slug}.html" class="btn btn-outline btn-sm">View Project</a>
+              <a href="#" class="btn btn-green btn-sm" data-wa="Hello Ishitechnoprojects, I am interested in the ${p.name} school project.">Request</a>
+            </div>
+          </div>
+        </div>`);
+    });
+  grid.querySelectorAll("[data-wa]").forEach(function (el) {
+    el.setAttribute("href", waLink(el.getAttribute("data-wa")));
+    el.setAttribute("target", "_blank");
+    el.setAttribute("rel", "noopener");
+  });
+}
+render("all");
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    render(btn.dataset.filter);
+  });
+});
+</script>
+</body>
+</html>

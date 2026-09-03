@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Make a Payment | Ishitechno Projects</title>
+<meta name="description" content="Pay securely online for your Ishitechno Projects order, service or advance via Razorpay — cards, UPI, netbanking and wallets accepted.">
+<link rel="canonical" href="https://ishitechnoprojects.in/payment.html">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-wrap">
+    <a href="index.html" class="brand-mark"><span class="dot"></span> ISHITECHNO<br><small>LEARN&nbsp;•&nbsp;BUILD&nbsp;•&nbsp;INNOVATE</small></a>
+    <nav class="site-nav" id="siteNav">
+      <a href="index.html">Home</a>
+      <a href="schools/index.html">Schools</a>
+      <a href="colleges/index.html">Colleges</a>
+      <a href="business/index.html">Business</a>
+      <a href="iot/index.html">IoT</a>
+      <a href="robotics/index.html">Robotics</a>
+      <a href="trackers/index.html">Trackers</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#" class="btn btn-outline btn-sm" data-wa="Hello Ishitechno Projects, I have a question about a payment.">Contact Us</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<section class="page-hero hero-navy">
+  <div class="circuit-bg"></div>
+  <h1>Make a Payment</h1>
+  <p>Pay securely for your project, order or service advance — cards, UPI, netbanking and wallets accepted via Razorpay.</p>
+</section>
+
+<section class="section">
+  <form class="form-card" id="paymentForm" style="max-width:480px;">
+    <div class="form-group">
+      <label>Your Name *</label>
+      <input type="text" name="name" required>
+    </div>
+    <div class="form-group">
+      <label>Email *</label>
+      <input type="email" name="email" required>
+    </div>
+    <div class="form-group">
+      <label>Phone *</label>
+      <input type="tel" name="phone" required>
+    </div>
+    <div class="form-group">
+      <label>What is this payment for?</label>
+      <input type="text" name="purpose" placeholder="e.g. School project kit, advance for GPS tracker, etc.">
+    </div>
+    <div class="form-group">
+      <label>Amount (₹) *</label>
+      <input type="number" name="amount" id="amountInput" min="1" step="1" required placeholder="e.g. 999">
+    </div>
+    <button type="submit" class="btn btn-primary btn-block" id="payBtn">Pay Now</button>
+    <div id="paymentStatus"></div>
+    <p style="font-size:12.5px;color:var(--ink-soft);text-align:center;margin-top:14px;">
+      Payments are processed securely by Razorpay. Ishitechno Projects never sees or stores your card, UPI or bank details.
+    </p>
+  </form>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>ISHITECHNO PROJECTS</h4>
+      <p>Learn • Build • Innovate<br>Electronics, Embedded Systems, IoT, Robotics &amp; Automation — for schools, colleges and businesses.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <a href="schools/index.html">School Projects</a>
+      <a href="colleges/index.html">College Projects</a>
+      <a href="business/index.html">Business Solutions</a>
+      <a href="trackers/index.html">IshiTrackers</a>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact</a>
+      <a href="iot/index.html">IoT Projects</a>
+      <a href="robotics/index.html">Robotics</a>
+    </div>
+    <div>
+      <h4>Get in Touch</h4>
+      <a href="tel:+918096661501">📞 8096661501</a>
+      <a href="mailto:ishitechnoprojects@gmail.com">✉️ ishitechnoprojects@gmail.com</a>
+      <a href="#" data-wa="Hello Ishitechno Projects, I have a question about a payment.">💬 WhatsApp Us</a>
+    </div>
+  </div>
+  <div class="footer-bottom">&copy; <span class="year"></span> Ishitechno Projects · ishitechnoprojects.in · All rights reserved.</div>
+</footer>
+
+<a href="#" class="wa-float" data-wa="Hello Ishitechno Projects, I have a question about a payment.">💬</a>
+
+<script src="js/site.js"></script>
+<script src="js/payment.js"></script>
+<script>
+document.getElementById("paymentForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const form = e.target;
+  const statusEl = document.getElementById("paymentStatus");
+  const payBtn = document.getElementById("payBtn");
+
+  const name = form.name.value.trim();
+  const email = form.email.value.trim();
+  const phone = form.phone.value.trim();
+  const purpose = form.purpose.value.trim();
+  const amount = form.amount.value;
+
+  statusEl.className = "";
+  statusEl.textContent = "";
+  payBtn.disabled = true;
+  payBtn.textContent = "Please wait...";
+
+  startRazorpayCheckout({
+    amountRupees: amount,
+    description: purpose || "Payment to Ishitechno Projects",
+    prefill: { name: name, email: email, contact: phone },
+    notes: { purpose: purpose || "General payment" },
+    onSuccess: function () {
+      statusEl.className = "ok";
+      statusEl.textContent = "Payment successful! Thank you — we'll be in touch shortly.";
+      payBtn.disabled = false;
+      payBtn.textContent = "Pay Now";
+      form.reset();
+    },
+    onError: function (err) {
+      statusEl.className = "err";
+      statusEl.textContent = err.message || "Something went wrong. Please try again or WhatsApp us.";
+      payBtn.disabled = false;
+      payBtn.textContent = "Pay Now";
+    }
+  });
+});
+</script>
+</body>
+</html>

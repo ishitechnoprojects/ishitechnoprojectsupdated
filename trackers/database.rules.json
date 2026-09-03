@@ -1,0 +1,73 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "users": {
+      "$uid": {
+        ".read":  "auth != null && (auth.uid === $uid || root.child('users').child(auth.uid).child('role').val() === 'admin')",
+        ".write": "auth != null && (auth.uid === $uid || root.child('users').child(auth.uid).child('role').val() === 'admin')",
+        ".validate": "newData.hasChildren(['name','email','role'])",
+        "role": {
+          ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'"
+        },
+        "disabled": {
+          ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'"
+        }
+      }
+    },
+
+    "devices": {
+      ".read": "auth != null",
+      "$deviceId": {
+        ".write": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('devices').child($deviceId).child('ownerUid').val() === auth.uid)",
+        ".validate": "newData.hasChildren(['secretKey'])"
+      }
+    },
+
+    "locations": {
+      "$deviceId": {
+        ".read": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('devices').child($deviceId).child('ownerUid').val() === auth.uid)",
+        ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'"
+      }
+    },
+
+    "history": {
+      "$deviceId": {
+        ".read": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('devices').child($deviceId).child('ownerUid').val() === auth.uid)",
+        ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'",
+        ".indexOn": ["timestamp"]
+      }
+    },
+
+    "alerts": {
+      ".indexOn": ["uid", "deviceId", "resolved"],
+      "$alertId": {
+        ".read": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'admin' || data.child('uid').val() === auth.uid)",
+        ".write": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'admin' || data.child('uid').val() === auth.uid || newData.child('uid').val() === auth.uid)"
+      }
+    },
+
+    "geofences": {
+      "$geofenceId": {
+        ".read": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'admin' || data.child('uid').val() === auth.uid)",
+        ".write": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'admin' || data.child('uid').val() === auth.uid || newData.child('uid').val() === auth.uid)"
+      }
+    },
+
+    "enquiries": {
+      "_comment": "Public company site (schools/colleges/business/contact) enquiry submissions. Completely separate from tracker data above. Anyone can CREATE an enquiry (no login required on the public site), nobody can read/edit/delete except an authenticated admin user of the IshiTrackers app.",
+      ".read": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'",
+      "$enquiryId": {
+        ".write": "!data.exists() && newData.hasChildren(['source','status','createdAt'])",
+        ".validate": "newData.hasChildren(['source','status','createdAt'])"
+      }
+    },
+
+    "payments": {
+      "_comment": "Razorpay payment records, written ONLY by the verifyRazorpayPayment Cloud Function via the Admin SDK (which bypasses these rules entirely). No client, public or authenticated, may read or write here directly — that is why both rules below are false.",
+      ".read": false,
+      ".write": false
+    }
+  }
+}

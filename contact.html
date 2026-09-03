@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us | Ishitechno Projects</title>
+<meta name="description" content="Get in touch with Ishitechno Projects — call, WhatsApp or email us about school, college, business or tracking projects.">
+<link rel="canonical" href="https://ishitechnoprojects.in/contact.html">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-wrap">
+    <a href="index.html" class="brand-mark"><span class="dot"></span> ISHITECHNO<br><small>LEARN&nbsp;•&nbsp;BUILD&nbsp;•&nbsp;INNOVATE</small></a>
+    <nav class="site-nav" id="siteNav">
+      <a href="index.html">Home</a>
+      <a href="schools/index.html">Schools</a>
+      <a href="colleges/index.html">Colleges</a>
+      <a href="business/index.html">Business</a>
+      <a href="iot/index.html">IoT</a>
+      <a href="robotics/index.html">Robotics</a>
+      <a href="trackers/index.html">Trackers</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" class="active">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#" class="btn btn-primary btn-sm" data-wa="Hello Ishitechno Projects, I would like to get in touch.">Get Your Project</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<section class="page-hero hero-navy">
+  <div class="circuit-bg"></div>
+  <h1>Get in Touch</h1>
+  <p>Questions about a school project, college project, custom business solution or IshiTrackers? We're happy to help.</p>
+</section>
+
+<section class="section">
+  <div class="grid grid-3" style="margin-bottom:50px;">
+    <div class="card" style="text-align:center;">
+      <div style="font-size:32px;margin-bottom:10px;">📞</div>
+      <h3 style="color:var(--navy);margin-bottom:6px;">Call / WhatsApp</h3>
+      <a href="tel:+918096661501" style="color:var(--blue);font-weight:700;">8096661501</a>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:32px;margin-bottom:10px;">✉️</div>
+      <h3 style="color:var(--navy);margin-bottom:6px;">Email</h3>
+      <a href="mailto:ishitechnoprojects@gmail.com" style="color:var(--blue);font-weight:700;">ishitechnoprojects@gmail.com</a>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:32px;margin-bottom:10px;">🌐</div>
+      <h3 style="color:var(--navy);margin-bottom:6px;">Website</h3>
+      <span style="color:var(--ink-soft);">ishitechnoprojects.in</span>
+    </div>
+  </div>
+
+  <form class="form-card" id="contactForm">
+    <div class="form-row">
+      <div class="form-group"><label>Name *</label><input type="text" name="name" required></div>
+      <div class="form-group"><label>Phone *</label><input type="tel" name="phone" required></div>
+    </div>
+    <div class="form-group"><label>Email *</label><input type="email" name="email" required></div>
+    <div class="form-group">
+      <label>I'm interested in</label>
+      <select name="interest">
+        <option value="School Project">School Project</option>
+        <option value="College Project">College Project</option>
+        <option value="Business Solution">Business Solution</option>
+        <option value="IshiTrackers">IshiTrackers (GPS Tracking)</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Message *</label><textarea name="message" required placeholder="Tell us a bit about what you need..."></textarea></div>
+    <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+    <div id="formStatus"></div>
+  </form>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>ISHITECHNO PROJECTS</h4>
+      <p>Learn • Build • Innovate<br>Electronics, Embedded Systems, IoT, Robotics &amp; Automation — for schools, colleges and businesses.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <a href="schools/index.html">School Projects</a>
+      <a href="colleges/index.html">College Projects</a>
+      <a href="business/index.html">Business Solutions</a>
+      <a href="trackers/index.html">IshiTrackers</a>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact</a>
+      <a href="iot/index.html">IoT Projects</a>
+      <a href="robotics/index.html">Robotics</a>
+    </div>
+    <div>
+      <h4>Get in Touch</h4>
+      <a href="tel:+918096661501">📞 8096661501</a>
+      <a href="mailto:ishitechnoprojects@gmail.com">✉️ ishitechnoprojects@gmail.com</a>
+      <a href="#" data-wa="Hello Ishitechno Projects, I would like to get in touch.">💬 WhatsApp Us</a>
+    </div>
+  </div>
+  <div class="footer-bottom">&copy; <span class="year"></span> Ishitechno Projects · ishitechnoprojects.in · All rights reserved.</div>
+</footer>
+
+<a href="#" class="wa-float" data-wa="Hello Ishitechno Projects, I would like to get in touch.">💬</a>
+
+<script src="js/site.js"></script>
+<script src="js/firebase-company.js"></script>
+<script>
+document.getElementById("contactForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const form = e.target;
+  const statusEl = document.getElementById("formStatus");
+  const data = {
+    name: form.name.value.trim(),
+    phone: form.phone.value.trim(),
+    email: form.email.value.trim(),
+    interest: form.interest.value,
+    message: form.message.value.trim()
+  };
+  statusEl.className = "";
+  statusEl.textContent = "Sending...";
+  submitEnquiry("contact", data)
+    .then(function () {
+      statusEl.className = "ok";
+      statusEl.textContent = "Thanks! Your message has been sent — we'll get back to you soon.";
+      form.reset();
+    })
+    .catch(function (err) {
+      statusEl.className = "err";
+      statusEl.textContent = "Something went wrong. Please WhatsApp us instead — tap the chat button below.";
+      console.error(err);
+    });
+});
+</script>
+</body>
+</html>
